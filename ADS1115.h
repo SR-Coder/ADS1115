@@ -21,6 +21,7 @@
 // ADDED INCLUDES
 #include <stdint.h>
 #include <bcm2835.h>
+#include "I2Cdev.h"
 
 
 // DEVICE REGISTERS
@@ -157,9 +158,22 @@ public:
     ADS1115();
     ADS1115(uint8_t address);
     void initialize();
+    void setConfig();
+    void setConfig(
+        uint8_t os_bit,
+        uint8_t mux_bits,
+        uint8_t pga_bits,
+        uint8_t mode_bit,
+        uint8_t dr_bits,
+        uint8_t cm_bit,
+        uint8_t cp_bit,
+        uint8_t cl_bit,
+        uint8_t cq_bits
+        );
 
 private:
     uint8_t deviceAddress;
+    uint16_t config_bits;
 };
 
 #endif
