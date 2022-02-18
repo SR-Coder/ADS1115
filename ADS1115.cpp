@@ -3,24 +3,34 @@
 #include "ADS1115.h"
 #include <iostream>
 
+/**
+ * @brief Construct a new ADS1115::ADS1115 object and sets the device address to the default device address of 0b1001000, additionally sets the default config to 0x8583.
+ * 
+ */
 ADS1115::ADS1115()
 {
-
+    deviceAddress = DEV_ADDR_GND;
+    setConfig();
 }
 
+/**
+ * @brief Construct a new ADS1115::ADS1115 objec
+ * 
+ * @param devAddress 
+ */
 ADS1115::ADS1115(uint8_t devAddress)
 {
-
+    deviceAddress = devAddress;
 }
 
 void ADS1115::initialize()
 {
-    bool result = I2Cdev::writeWord(DEV_ADDR_GND, PTR_CONFIG, config_bits);
+    bool result = I2Cdev::writeWord(deviceAddress, PTR_CONFIG, config_bits);
     if(result){
-        printf("Device initialized...");
+        printf("Device initialized... \n");
     }
     else {
-        printf("initialization failed... Check connections");
+        printf("initialization failed... Check connections \n");
     }
 }
 
@@ -31,6 +41,23 @@ void ADS1115::initialize()
 void ADS1115::setConfig()
 {
     config_bits = CONFG_DEFAULT;
+}
+
+
+/**
+ * @brief Sets the devices address to one of 4 values:
+ * @param . ADDR Pin |   Slave Address
+ * @param .---------+-----------------
+ * @param . Ground  |   1001000
+ * @param .   VDD   |   1001001
+ * @param .   SDA   |   1001010
+ * @param .   SCL   |   1001011     
+ * 
+ * @param devAddress Depending on what source is attached to the address pin will determine what address needs to be set, the default is ground.
+ */
+void ADS1115::setDeviceAddress(uint8_t devAddress)
+{
+    deviceAddress = devAddress;
 }
 
 /** 

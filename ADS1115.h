@@ -170,6 +170,7 @@ public:
         uint8_t cl_bit,
         uint8_t cq_bits
         );
+    void setDeviceAddress(uint8_t devAddress);
 
 private:
     uint8_t deviceAddress;
